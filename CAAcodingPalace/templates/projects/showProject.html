@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{project.title}}</title>
+</head>
+<body>
+    <p>项目名:<span>{{project.title}}</span></p>
+    <p>作者:<span>{{project.author_name}}</span></p>
+    <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
+    <img src="/static/projects/coverPictures/{{project.cover_portrait}}">
+    <pre>{{project.code}}</pre>
+</body>
+</html>

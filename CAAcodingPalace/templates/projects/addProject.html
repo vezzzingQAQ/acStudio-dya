@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传项目</title>
+</head>
+<body>
+    <form action="{% url 'addprojectaction' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>项目名称:<input type="text" maxlength="8" name="title"></p>
+        <p>项目简介:<input type="text" maxlength="20" name="introduction"></p>
+        <select name="type">
+            <option value="processing.py">processing.py</option>
+            <option value="processing">processing</option>
+            <option value="python3">python3</option>
+            <option value="p5.js">p5.js</option>
+            <option value="visualBasic">visualBasic</option>
+            <option value="javascript">javascript</option>
+            <option value="Java">Java</option>
+            <option value="html5&css3">html5&css3</option>
+        </select>
+        <p>项目源码:<textarea name="code"></textarea></p>
+        <p>首页图片:<input type="file" name="pic"></p>
+        
+        <input type="submit" value="上传">
+    </form>
+</body>
+</html>

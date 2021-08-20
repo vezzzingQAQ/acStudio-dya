@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+</head>
+<body>
+    <section class="changeable">
+        <form action="{% url 'changeusersettinsaction' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>俺的大名:<input type="text" value="{{request.session.username}}" name="username"></p>
+            <p>介绍下吧:<input type="text" maxlength="50" name="introduction"></p>
+            <select name="sex">
+                <option value="man">♂</option>
+                <option value="fman">♀</option>
+            </select>
+            <select name="grade">
+                <option value="d1">大一</option>
+                <option value="d2">大二</option>
+                <option value="d3">大三</option>
+                <option value="d4">大四</option>
+                <option value="y1">研一</option>
+                <option value="y2">研二</option>
+                <option value="y3">研三</option>
+                <option value="tc">老师</option>
+            </select>
+            <select name="profession">
+                <option value="艺术与科技">艺术与科技</option>
+                <option value="工业设计">工业设计</option>
+                <option value="体育特长生">体育特长生?</option>
+            </select>
+            <p>头像:<input type="file" name="pic"></p>
+            <input type="submit" value="上传">
+        </form>
+    </section>
+</body>
+</html>

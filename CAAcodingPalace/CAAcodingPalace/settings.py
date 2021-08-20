@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'zusers',
+    'zprojects',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ WSGI_APPLICATION = 'CAAcodingPalace.wsgi.application'
 DATABASES = {
     'default':{
 		'ENGINE':'django.db.backends.mysql',
-		'NAME':'caacodingpalace',
+		'NAME':'z-caacodingpalace',
 		'USER':'root',
 		'PASSWORD':'root',
 		'HOST':'localhost',
