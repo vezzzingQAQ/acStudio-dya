@@ -1,27 +1,134 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{project.title}}</title>
-</head>
-<body>
-    <p>项目名:<span>{{project.title}}</span></p>
-    <p>作者:<span>{{project.author_name}}</span></p>
-    <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
-    <img src="/static/projects/coverPictures/{{project.cover_portrait}}">
-    <a href="/static/projects/repository/{{project.repository}}" target="_blank">下载源文件</a>
-    <section class="code_section">
-        <pre>{{project.code}}</pre>
-    </section>
-    <section class="comment_section">
+{% extends "public_sources/baseIndex.html" %}
+{% block title %}首页{% endblock %}
+{% block jscs %}
+<link rel="stylesheet" type="text/css" href="/static/public_sources/vs.min.css">
+<script src="/static/public_sources/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<style>
+    .normalSection{
+        width: 100vw;
+        margin: 0;
+        position: relative;
+    }
+    .inner{
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        height: min-content;
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+        position: relative;
+        padding-bottom: 80px;
+    }
+    .projectinfo_section{
+        background-color: rgb(238, 238, 238);
+    }
+    .projectinfo_section .title{
+        font-size: 34px;
+        width: min-content;
+        padding-bottom: 5px;
+        border-bottom: rgb(107, 43, 226) 5px solid;
+    }
+    .projectinfo_section .author{
+        height: 100px;
+    }
+    .projectinfo_section .author img{
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 50%;
+    }
+    .projectinfo_section .author span{
+        position: absolute;
+        left: 110px;
+        line-height: 90px;
+        font-size: 17px;
+    }
+    .projectinfo_section .type{
+        font-size: 13px;
+        color: gray;
+    }
+    .projectinfo_section .img_holder{
+        overflow: hidden;
+        position: absolute;
+        top: 10%;
+        right: 30px;
+        height: 80%;
+        border-radius: 10px;
+        width: 300px;
+    }
+    .projectinfo_section .project_img{
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .projectinfo_section .download{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        line-height: 20px;
+        padding: 7px;
+        background-color: rgb(107, 43, 226);
+        text-decoration: none;
+        color: white;
+        border-radius:20px;
+    }
+
+    .comment_section{
+        background-color: rgb(238, 238, 238);
+        padding-top: 20px;
+    }
+    .comment_section textarea{
+        width: 100%;
+    }
+    .comment_section .submit{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        line-height: 20px;
+        padding: 7px;
+        background-color: rgb(201, 201, 201);
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        border-radius:5px;
+        border: none;
+        outline: none;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="projectinfo_section normalSection">
+    <div class="inner">
+        <p class="title">{{project.title}}</p>
+        <p class="author"><img src="/static/users/headPictures/{{project.author_head_portrait}}" alt="出错啦"><span>by:{{project.author_name}}</span></p>
+        <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
+        <p class="type">{{project.type}}</p>
+        <a class="download" href="/static/projects/repository/{{project.repository}}" target="_blank">下载源文件</a>
+        <div class="img_holder">
+            <img class="project_img" src="/static/projects/coverPictures/{{project.cover_portrait}}">
+        </div>
+    </div>
+</section>
+<section class="code_section normalSection">
+    <div class="inner">
+        <pre><code>{{project.code}}</code></pre>
+    </div>
+</section>
+<section class="comment_section normalSection">
+    <div class="inner">
         <form action="{% url 'addcommentaction' %}" method="POST">
             {% csrf_token %}
-            <textarea name="content">
+            <textarea name="content" rows="8" maxlength="255">
 
             </textarea>
             <input type="hidden" name="projectId" value="{{project.id}}">
-            <input type="submit">
+            <input class="submit" type="submit">
         </form>
         <div class="commentsContainer">
             {% for comment in commentsList %}
@@ -31,6 +138,6 @@
             {% endfor %}
             </div>
         </div>
-    </section>
-</body>
-</html>
+    </div>
+</section>
+{% endblock %}

@@ -63,13 +63,30 @@
         margin: 0;
         margin-bottom: 50px;
         height: 50px;
-        background-color: rgb(59, 59, 59);
+        background-color: rgb(255, 255, 255);
         line-height: 50px;
-        color: white;
+        color: rgb(107, 43, 226);
         position: sticky;
         top: 50px;
         z-index: 9999;
     }
+
+    .content_section .textArea_div .a_container{
+        text-decoration: none;
+        width: 90%;
+        margin-top: 15px;
+        padding-top: 15px;
+        text-align: right;
+
+    }
+    .content_section .textArea_div .a_container a{
+        margin-top: 15px;
+        padding-top: 15px;
+        text-align: right;
+        text-decoration: none;
+        color: rgb(226, 43, 52);
+    }
+
 </style>
 {% endblock %}
 {% block content %}
@@ -132,7 +149,7 @@
         {% else %}
         TA
         {% endif %}
-        的 项 目:</p>
+        的 项 目 ▼</p>
 
     <div class="innerContent_div">
         {% for project in projectsList %}
@@ -145,7 +162,7 @@
                 <p class="contentInnerText_p">{{project.introduction}}</p>
                 <p class="contentInnerType_p">{{project.type}}</p>
                 {% if isAdmin == True %}
-                <p class="contentInnerText_p"><a href="javascript:doDel('/projects/deleteProjectAction/{{project.id}}');">删除项目{{project.id}}</a></p>
+                <p class="contentInnerText_p a_container"><a href="javascript:doDel('/projects/deleteProjectAction/{{project.id}}');">删除项目</a></p>
                 {% endif %}                
             </div>
         </div>

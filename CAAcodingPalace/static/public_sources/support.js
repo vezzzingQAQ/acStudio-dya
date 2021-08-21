@@ -24,6 +24,7 @@ function scrollAnimate(){
         }
     })
     //background
+    /*
     var mainBackground=document.querySelector(".content_section");
     window.addEventListener("scroll",function(){
         var value=window.scrollY;
@@ -31,5 +32,5 @@ function scrollAnimate(){
         if(currentValue<=255*3){
             mainBackground.style.backgroundColor="rgb("+currentValue/3+","+currentValue/3+","+currentValue/3+")";
         }
-    })
+    })*/
 }
