@@ -218,7 +218,7 @@ body{
 .content_section .innerContent_div .innerComponent_div:hover .textArea_div .contentInnerTitle_h2{
     color: rgb(107, 43, 226);
     padding-bottom: 5px;
-    width: min-content;
+    width: max-content;
     border-bottom: 5px solid rgb(107,43,226);
 }
 .content_section .innerContent_div .innerComponent_div .jumpLink_a{
