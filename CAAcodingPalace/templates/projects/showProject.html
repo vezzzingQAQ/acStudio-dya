@@ -11,5 +11,12 @@
     <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
     <img src="/static/projects/coverPictures/{{project.cover_portrait}}">
     <pre>{{project.code}}</pre>
+    <form action="{% url 'addcommentaction' %}" method="POST">
+        {% csrf_token %}
+        <textarea name="content">
+
+        </textarea>
+        <input type="submit">
+    </form>
 </body>
 </html>
