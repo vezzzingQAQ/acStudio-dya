@@ -10,13 +10,27 @@
     <p>作者:<span>{{project.author_name}}</span></p>
     <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
     <img src="/static/projects/coverPictures/{{project.cover_portrait}}">
-    <pre>{{project.code}}</pre>
-    <form action="{% url 'addcommentaction' %}" method="POST">
-        {% csrf_token %}
-        <textarea name="content">
+    <a href="/static/projects/repository/{{project.repository}}" target="_blank">下载源文件</a>
+    <section class="code_section">
+        <pre>{{project.code}}</pre>
+    </section>
+    <section class="comment_section">
+        <form action="{% url 'addcommentaction' %}" method="POST">
+            {% csrf_token %}
+            <textarea name="content">
 
-        </textarea>
-        <input type="submit">
-    </form>
+            </textarea>
+            <input type="hidden" name="projectId" value="{{project.id}}">
+            <input type="submit">
+        </form>
+        <div class="commentsContainer">
+            {% for comment in commentsList %}
+            <div class="commentBox">
+                <p class="date">{{comment.created_time|date:'Y-m-d H:i:s'}}</p>
+                <p class="content"><img src="/static/users/headPicturesSmall/{{comment.author_head_portrait}}"><span>{{comment.author_name}}:</span>{{comment.content}}</p>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
 </body>
 </html>

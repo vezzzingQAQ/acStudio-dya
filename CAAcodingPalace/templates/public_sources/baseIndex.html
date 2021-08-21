@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="ico/ico1.jpg">
+        <title>{% block title %}title{% endblock %}</title>
+
+        <script src="/static/public_sources/support.js"></script>
+        <script src="/static/public_sources/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/public_sources/classicMainPage.css">
+
+        <script type="text/javascript">
+            $(function(){
+                //监听一级菜单移入移出事件
+                $("body").delegate(".nav>li","mouseenter",function(){
+                    var $sub=$(this).children(".sub");
+                    $sub.stop();
+                    $sub.slideDown(800);
+                });
+                $("body").delegate(".nav>li","mouseleave",function(){
+                    var $sub=$(this).children(".sub");
+                    $sub.stop();
+                    $sub.slideUp(800);
+                })
+            });
+        </script>
+        {% block jscs %}
+            <script>
+                window.onload=function(){
+                }
+            </script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <section class="foot_section">
+            <p class="footInnerText_p">AC studio</p>
+            <p class="footInnerApm_p"><span>idolic</span> and <span>practical</span></p>
+            <p class="footInnerApm_p">by VezzzingQAQ <a class="aboutAuthor_a" href="../about/aboutAuthor.html">about</a></p>
+        </section>
+    </body>
+</html>

@@ -5,6 +5,7 @@ from zprojects.models import Project
 import hashlib
 import time,os
 from PIL import Image
+from django.core.paginator import Paginator
 
 # Create your views here.
 #**********************************************************************
@@ -102,6 +103,15 @@ def login_action(request):
 
     return(resp)
 #**********************************************************************
+@check_login
+#退出登录
+def logout_action(request):
+    if "username" in request.session:
+        del request.session["username"]
+    if "userid" in request.session:
+        del request.session["userid"]
+    return(HttpResponseRedirect("/users/loginPage"))
+#**********************************************************************
 #改变用户设置主题页
 @check_login
 def change_user_settings_page(request):
@@ -181,3 +191,23 @@ def change_user_settings_action(request):
     
     currentUser.save()
     return(HttpResponse("修改成功"))
+#**********************************************************************
+#用户主页
+@check_login
+def show_user_info_page(request,userId=1,currentPage=1):
+    isAdmin=False#是否是已经登录的用户自己
+    currentUser=User.objects.get(id=userId)
+    if currentUser.id==request.session["userid"]:
+        isAdmin=True
+    curentProjects=Project.objects.filter(user_id=userId)
+    p=Paginator(curentProjects,4)#4条数据一页
+    #判断页码值是否有效
+    if currentPage<1:
+        currentPage=1
+    if currentPage>p.num_pages:
+        currentPage=p.num_pages
+    #重新返回表格
+    projectsList=p.page(currentPage)
+
+    uploadContext={"currentUser":currentUser,"projectsList":projectsList,"currentPage":currentPage,"pagesList":p.page_range,"isAdmin":isAdmin}
+    return(render(request,"users/showUserInfo.html",uploadContext))

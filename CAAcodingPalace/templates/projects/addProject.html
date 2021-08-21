@@ -8,7 +8,7 @@
 <body>
     <form action="{% url 'addprojectaction' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <p>项目名称:<input type="text" maxlength="8" name="title"></p>
+        <p>项目名称:<input type="text" maxlength="12" name="title"></p>
         <p>项目简介:<input type="text" maxlength="20" name="introduction"></p>
         <select name="type">
             <option value="processing.py">processing.py</option>
@@ -18,11 +18,11 @@
             <option value="visualBasic">visualBasic</option>
             <option value="javascript">javascript</option>
             <option value="Java">Java</option>
-            <option value="html5&css3">html5&css3</option>
+            <option value="html5css3">html5css3</option>
         </select>
         <p>项目源码:<textarea name="code"></textarea></p>
         <p>首页图片:<input type="file" name="pic"></p>
-        
+        <p>上传源文件:<input type="file" name="pjt"></p>
         <input type="submit" value="上传">
     </form>
 </body>

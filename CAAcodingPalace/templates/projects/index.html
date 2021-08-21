@@ -1,90 +1,73 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="ico/ico1.jpg">
-        <title>AC studio</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>        
-        <script type="text/javascript" class="231">
-            $(function(){
-                //监听一级菜单移入移出事件
-                $(".nav>li").mouseenter(function(){
-                    var $sub=$(this).children(".sub");
-                    $sub.stop();
-                    $sub.slideDown(800);
-                });
-                $(".nav>li").mouseleave(function(){
-                    var $sub=$(this).children(".sub");
-                    $sub.stop();
-                    $sub.slideUp(800);
-                });
-            });
-        </script>
-        <script src="/static/projects/support.js"></script>
-        <script type="text/javascript">
-            
-            window.onload=function(){
-                scrollAnimate()
-            }
-        </script>
-        <link rel="stylesheet" type="text/css" href="/static/projects/classicMainPage.css">
-    </head>
-    <body>
-        <main></main>
-        <section class="head_section">
-            <div class="headInnerTitleContainer_div">            
-                <div class="headInnerTitle_div">
-                    AC studio
-                    <p class="headInnerText_p">或者说诗意的实用的东西</p>
-                </div>
-            </div>
-        </section>
-        <section class="nav_section">
-            <ul class="nav">
-                <li><a href="#">首页</a></li>
-                <li><a href="{% url 'addprojectpage' %}">发布项目</a></li>
-                <li>我的
-                    <ul class="sub">
-                        <li><a href="{% url 'changeusersettingspage' %}">完善信息</a></li>
-                        <li>我的主页</li>
-                        <li>退出登录</li>
-                    </ul>
-                </li>
+{% extends "public_sources/baseIndex.html" %}
+{% block title %}首页{% endblock %}
+{% block jscs %}
+<script>
+    window.onload=function(){
+        scrollAnimate();
+    }
+</script>
+{% endblock %}
+{% block content %}
+<section class="head_section">
+    <div class="headInnerTitleContainer_div">            
+        <div class="headInnerTitle_div">
+            AC studio
+            <p class="headInnerText_p">或者说诗意的实用的东西</p>
+        </div>
+    </div>
+</section>
+<section class="nav_section">
+    <ul class="nav">
+        <li>首页
+            <ul class="sub">
+                <li><a href="{% url 'indexpage' 1 %}">全部</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=processing.py">processing.py</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=processing">processing</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=python3">python3</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=p5.js">p5.js</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=visualBasic">visualBasic</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=javascript">javascript</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=Java">Java</a></li>
+                <li><a href="{% url 'indexpage' 1 %}?keyWord=html5css3">html5css3</a></li>
             </ul>
-            </section>
-        <section class="content_section">
-            <div class="innerContent_div">
-                {% for project in projectsList %}
-                <div class="innerComponent_div">
-                    <a href="/projects/showProjectPage/{{project.id}}" class="jumpLink_a">
-                        <img class='image_img' style="background:url('/static/projects/coverPictures/{{project.cover_portrait}}');background-size: cover;background-position: center;background-repeat: no-repeat;">
-                    </a>
-                    <div class="textArea_div">
-                        <h2 class="contentInnerTitle_h2">{{project.title}}</h2>
-                        <p class="contentInnerText_p">{{project.introduction}}</p>
-                        <p class="contentInnerType_p">{{project.type}}</p>
-                        <p class="contentInnerType_p imgContainer"></p><img class="contentInnerImg_img" src="/static/users/headPicturesSmall/{{project.author_head_portrait}}">{{project.author_name}}</p>
-                    </div>
-                </div>
-                {% endfor %}        
+        </li>
+        <li><a href="{% url 'addprojectpage' %}">发布项目</a></li>
+        <li>我的
+            <ul class="sub">
+                <li><a href="{% url 'changeusersettingspage' %}">完善信息</a></li>
+                <li><a href="/users/showUserInfoPage/{{request.session.userid}}/1">我的主页</a></li>
+                <li><a href="{% url 'logoutaction' %}">退出登录</a></li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<section class="content_section">
+    <div class="innerContent_div">
+        {% for project in projectsList %}
+        <div class="innerComponent_div">
+            <a href="/projects/showProjectPage/{{project.id}}" class="jumpLink_a">
+                <img class='image_img' style="background:url('/static/projects/coverPictures/{{project.cover_portrait}}');background-size: cover;background-position: center;background-repeat: no-repeat;">
+            </a>
+            <div class="textArea_div">
+                <h2 class="contentInnerTitle_h2">{{project.title}}</h2>
+                <p class="contentInnerText_p">{{project.introduction}}</p>
+                <p class="contentInnerType_p">{{project.type}}</p>
+                <p class="contentInnerType_p imgContainer"><img class="contentInnerImg_img" src="/static/users/headPicturesSmall/{{project.author_head_portrait}}"><a href="/users/showUserInfoPage/{{project.user_id}}/1">{{project.author_name}}</a></p>
             </div>
-            <div class="pages_div">
-                <a class="bottomButton prev_button" href="{% url 'indexpage' currentPage|add:-1 %}"><p>上一页</p></a>
-                {% for p in pagesList %}
-                    {% if currentPage == p %}
-                        <a class="bottomButton page_button" href="{% url 'indexpage' p %}"><p>{{ p }}</p></a>
-                    {% else %}
-                        <a class="bottomButton page_button"  id="currentPage" href="{% url 'indexpage' p %}"><p>{{ p }}</p></a>
-                    {% endif %}
-                {% endfor %}
-                <a class="bottomButton next_button" href="{% url 'indexpage' currentPage|add:1 %}"><p>下一页</p></a>
-                </div>
-        </section>
-        <section class="foot_section">
-            <p class="footInnerText_p">AC studio</p>
-            <p class="footInnerApm_p"><span>idolic</span> and <span>practical</span></p>
-            <p class="footInnerApm_p">by VezzzingQAQ <a class="aboutAuthor_a" href="../about/aboutAuthor.html">about</a></p>
-        </section>
-    </body>
-</html>
+        </div>
+        {% endfor %}        
+    </div>
+    <div class="pages_div">
+        <a class="bottomButton prev_button" href="{% url 'indexpage' currentPage|add:-1 %}{{mypara}}"><p>上一页</p></a>
+        {% for p in pagesList %}
+            {% if currentPage != p %}
+                <a class="bottomButton page_button" href="{% url 'indexpage' p %}{{mypara}}"><p>{{ p }}</p></a>
+            {% else %}
+                <a class="bottomButton page_button"  id="currentPage" href="{% url 'indexpage' p %}{{mypara}}"><p>{{ p }}</p></a>
+            {% endif %}
+        {% endfor %}
+        <a class="bottomButton next_button" href="{% url 'indexpage' currentPage|add:1 %}{{mypara}}"><p>下一页</p></a>
+    </div>
+</section>
+{% endblock %}
+

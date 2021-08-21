@@ -41,29 +41,23 @@ body{
 ::-webkit-scrollbar{
     display: none;
 }
-main{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    margin: 0;
-    padding: 0;
-}
 /**********************************************************************************************/
 .head_section{
     width: 100vw;
-    height: 100vh;
+    height: 50vh;
     z-index: 1;
+    background-image: url("/static/public_sources/pictures/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 .head_section .headInnerTitleContainer_div{
     z-index: 999;
     font-family:'Times New Roman', Times, serif;
     position: absolute;
-    top: 50%;
+    top: 11vh;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translateX(-50%);
     width: 80%;
     height: min-content;
     display: table;
@@ -111,7 +105,7 @@ main{
     margin: 0;
     padding: 0;
     list-style: none;
-    width: 33vw;
+    width: 33.33vw;
     height: 50px;
     line-height: 50px;
     text-align: center;
@@ -129,7 +123,7 @@ main{
     padding: 0;
 
     list-style: none;
-    background-color: rgb(49, 49, 49);
+    background-color: rgba(49, 49, 49, 0.705);
 }
 .nav a{
     color: white;
@@ -223,6 +217,9 @@ main{
     margin-top: 200px;
     transition: 0.5s ease-in-out;
 }
+.content_section .innerContent_div .innerComponent_div .no_move{
+    margin-top: 5px;
+}
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerTitle_h2{
     margin: 0;
     padding: 0;
@@ -243,18 +240,31 @@ main{
     font-size: 0.5em;
     color: rgb(131, 131, 131);
 }
+.content_section .innerContent_div .innerComponent_div .textArea_div .imgContainer{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color: blueviolet;
+    position: relative;
+}
+
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerImg_img{
     display: inline;
     width: 30px;
     height: 30px;
     background-size: cover;
     border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 10px;
 }
-.content_section .innerContent_div .innerComponent_div .textArea_div .imgContainer{
-    padding-top: 3px;
-    padding-bottom: 3px;
+.content_section .innerContent_div .innerComponent_div .textArea_div .imgContainer a{
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    width: 100%;
     line-height: 30px;
     color: blueviolet;
+    text-decoration: none;
 }
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerType_p .innerBox_span{
     border: 1px solid rgba(0,0,0,0.1);

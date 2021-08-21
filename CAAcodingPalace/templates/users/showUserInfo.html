@@ -1,11 +1,166 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "public_sources/baseIndex.html" %}
+{% block title %}首页{% endblock %}
+{% block jscs %}
+<script>
+    function doDel(uu){
+        if(confirm("确定要删除吗?")){
+            window.location=uu;
+        }
+    }
+</script>
+<style>
+    .userinfo_section{
+        height: 340px;
+        background-color: rgb(238, 238, 238);
+    }
+    .userinfo_section .innerinfo{
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+        position: relative;
+    }
+    .userinfo_section img{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        left: 0;
+        margin-top: 70px;
+        
+    }
+    .userinfo_section .textarea{
+        position: absolute;
+        margin-top: 80px;
+        margin-bottom: 50px;
+        left: 410px;
+    }
+    .userinfo_section .textarea .name{
+        color: black;
+        font-size: 23px;
+    }
+    .userinfo_section .textarea .introduction{
+        color: rgb(66, 66, 66);
+        font-size: 15px;
+    }
+    .userinfo_section .textarea .sub_introduction span{
+        font-size: 14px;
+        margin-right: 4px;
+        padding: 3px;
+        border: 1px solid rgba(0, 0, 0, 0.26);
+        border-radius: 3px;
+    }
+    .content_section{
+        margin-top: 0;
+        padding-top: 0;
+        background-color: rgb(241, 241, 241);
+    }
+    .content_title{
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 50px;
+        height: 50px;
+        background-color: rgb(59, 59, 59);
+        line-height: 50px;
+        color: white;
+        position: sticky;
+        top: 50px;
+        z-index: 9999;
+    }
+</style>
+{% endblock %}
+{% block content %}
+{% if isAdmin == True %}
+    <section class="nav_section">
+        <ul class="nav">
+            <li><a href="{% url 'indexpage' 1 %}">首页</a></li>
+            <li><a href="{% url 'addprojectpage' %}">发布项目</a></li>
+            <li><a href="{% url 'changeusersettingspage' %}">完善信息</a></li>
+        </ul>
+    </section>
+{% else %}
+    <section class="nav_section">
+        <ul class="nav">
+            <li><a href="{% url 'indexpage' 1 %}">首页</a></li>
+            <li><a href="{% url 'addprojectpage' %}">发布项目</a></li>
+            <li><a href="#"> </a></li>
+        </ul>
+    </section>
+{% endif %}
+<section class="userinfo_section">
+    <div class="innerinfo">
+        <img src="/static/users/headPictures/{{currentUser.head_portrait}}" alt="出错啦">
+        <div class="textarea">
+            <p class="name">{{currentUser.username}}</p>
+            <p class="introduction">{{currentUser.introduction}}</p>
+            <p class="sub_introduction">
+                {% if currentUser.sex == 0 %}
+                    <span>♂</span>
+                {% else %}
+                    <span>♀</span>
+                {% endif %}
+                <span>{{currentUser.profession}}</span>
+                {% if currentUser.grade == 1 %}
+                    <span>大一</span>
+                {% elif currentUser.grade == 2 %}
+                    <span>大二</span>
+                {% elif currentUser.grade == 3 %}
+                    <span>大三</span>
+                {% elif currentUser.grade == 4 %}
+                    <span>大四</span>
+                {% elif currentUser.grade == 5 %}
+                    <span>研一</span>
+                {% elif currentUser.grade == 6 %}
+                    <span>研二</span>
+                {% elif currentUser.grade == 7 %}
+                    <span>研三</span>
+                {% elif currentUser.grade == 8 %}
+                    <span>老师</span>
+                {% endif %}
+            </p>
+
+        </div>
+    </div>
+</section>
+<section class="content_section">
+    <p class="content_title">
+        {% if isAdmin == True %}
+        我
+        {% else %}
+        TA
+        {% endif %}
+        的 项 目:</p>
+
+    <div class="innerContent_div">
+        {% for project in projectsList %}
+        <div class="innerComponent_div">
+            <a href="/projects/showProjectPage/{{project.id}}" class="jumpLink_a">
+                <img class='image_img' style="background:url('/static/projects/coverPictures/{{project.cover_portrait}}');background-size: cover;background-position: center;background-repeat: no-repeat;">
+            </a>
+            <div class="textArea_div no_move">
+                <h2 class="contentInnerTitle_h2">{{project.title}}</h2>
+                <p class="contentInnerText_p">{{project.introduction}}</p>
+                <p class="contentInnerType_p">{{project.type}}</p>
+                {% if isAdmin == True %}
+                <p class="contentInnerText_p"><a href="javascript:doDel('/projects/deleteProjectAction/{{project.id}}');">删除项目{{project.id}}</a></p>
+                {% endif %}                
+            </div>
+        </div>
+        {% endfor %}        
+    </div>
+    <div class="pages_div">
+        <a class="bottomButton prev_button" href="/users/showUserInfoPage/{{currentUser.id}}/{{currentPage|add:-1}}"><p>上一页</p></a>
+        {% for p in pagesList %}
+            {% if currentPage != p %}
+                <a class="bottomButton page_button" href="/users/showUserInfoPage/{{currentUser.id}}/{{p}}"><p>{{ p }}</p></a>
+            {% else %}
+                <a class="bottomButton page_button"  id="currentPage" href="/users/showUserInfoPage/{{currentUser.id}}/{{p}}"><p>{{ p }}</p></a>
+            {% endif %}
+        {% endfor %}
+        <a class="bottomButton next_button" href="/users/showUserInfoPage/{{currentUser.id}}/{{currentPage|add:+1}}"><p>下一页</p></a>
+    </div>
+</section>
+{% endblock %}
