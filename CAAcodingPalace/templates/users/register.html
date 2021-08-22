@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注册</title>
+    <script src="/static/public_sources/jquery.min.js"></script>
     <style>
         *{
             padding: 0;
@@ -37,7 +38,34 @@
         .header p{
             color: white;
         }
+
+        .ecodeState{
+            display: none;
+        }
+        button{
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
     </style>
+    <script>
+        $(function(){
+            $("button").click(function(){
+                $.ajax({
+                    type:"get",
+                    url:"/users/sendEcodeAction/"+$("#email").val(),
+                    dataType:"json",
+                    async:false,
+                    success:function(res){
+                        $(".ecodeState").css("display","inline");
+                    },
+                    error:function(xhr){
+                        alert(xhr.status);
+                    }
+                })
+            });
+        })
+    </script>
 </head>
 <body>
     <section class="header">
@@ -46,8 +74,11 @@
             <p>用户名:<input type="text" name="username"></p>
             <p>密码:<input type="password" name="password_1"></p>
             <p>确认一遍密码:<input type="password" name="password_2"></p>
-            <input type="submit" value="注册!">
+            <p>邮箱:<input type="email" name="email" id="email"></p>
+            <p>验证码:<input type="text" name="ecode"></p>
+            <input type="submit" value="注册">
         </form>
+        <button>获取验证码</button><p class="ecodeState"></p>
     </section>
 </body>
 </html>

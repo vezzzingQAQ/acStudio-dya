@@ -8,6 +8,9 @@ urlpatterns=[
     path("loginPage",views.login_page,name="loginpage"),
     path("loginAction",views.login_action,name="loginaction"),
 
+    #发送验证码
+    path("sendEcodeAction/<str:email>",views.send_ecode_action,name="sendecodeaction"),
+
     path("logoutAction",views.logout_action,name="logoutaction"),
 
     path("changeUserSettingsPage",views.change_user_settings_page,name="changeusersettingspage"),

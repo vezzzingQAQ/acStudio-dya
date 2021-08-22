@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.mymiddleware.ExceptionMW'
 ]
 
 ROOT_URLCONF = 'CAAcodingPalace.urls'
@@ -134,3 +135,14 @@ STATICFILES_DIRS = [#静态文件【大坑】
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#发送邮件
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com' #QQ邮箱SMTP服务器地址
+EMAIL_PORT = 25 #SMTP端口号,QQ邮箱是25
+EMAIL_HOST_USER = '1932966162@qq.com'
+EMAIL_HOST_PASSWORD = 'sqmuuyfgcydwdhej' #授权码
+
+#自己加一个配置
+MY_EMAIL=["1932966162@qq.com"]

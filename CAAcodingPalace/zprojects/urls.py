@@ -13,4 +13,13 @@ urlpatterns=[
     path("showProjectPage/<int:projectId>",views.show_project_page,name="showprojectpage"),
 
     path("addCommentAction",views.add_comment_action,name="addcommentaction"),
+
+    #生成所有项目的CSV文件
+    path("downloadCsvAction",views.create_project_csv_action,name="downloadcsvaction"),
+
+    #发送邮件
+    path("sendEmailAction",views.send_email_action,name="sendemailaction"),
+
+    #异常测试
+    path("test",views.test,name="test"),
 ]

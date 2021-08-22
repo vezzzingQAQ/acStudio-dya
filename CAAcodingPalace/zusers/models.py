@@ -10,6 +10,11 @@ class User(models.Model):
     score=models.IntegerField(default=10)
     level=models.IntegerField(default=0)
 
+    #邮箱*新增
+    email=models.CharField(default="1932966162@qq.com",max_length=60)
+    #暂时存放验证码
+    ecode_temp=models.CharField(default="00000000",max_length=10)
+
     #个人足迹
     project_number=models.IntegerField(default=0)#创建的项目数量
     comment_number=models.IntegerField(default=0)#留下的评论数

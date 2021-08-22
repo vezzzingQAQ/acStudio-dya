@@ -1,4 +1,4 @@
-from django.http import request
+from django.http import request, response
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from zprojects.models import Project,Comment
@@ -6,7 +6,10 @@ from zusers.models import User
 from django.http import HttpResponse,HttpResponseRedirect
 import time,os
 from PIL import Image
-
+#导出CSV
+import csv,codecs
+#发送邮件
+from django.core import mail
 # Create your views here.
 #**********************************************************************
 #◉在函数被执行前会先执行装饰器
@@ -136,5 +139,30 @@ def add_comment_action(request):
     currentComment.content=request.POST["content"]
     currentComment.save()
     return(HttpResponseRedirect("/projects/showProjectPage/"+request.POST["projectId"]))
+#**********************************************************************
+#生成项目的CSV
+@check_login
+def create_project_csv_action(request):
+    response=HttpResponse(content_type="text/csv")
+    #解决中文乱码
+    response.write(codecs.BOM_UTF8)
+    response["Content-Disposition"]='attachment;filename="projects.csv"'
+    all_projects=Project.objects.all()
+    writer=csv.writer(response)
+    writer.writerow(["id","title","introduction","user","createTime"])
+    for project in all_projects:
+        writer.writerow([project.id,project.title,project.introduction,project.author_name,project.created_time])
+    return response
+#**********************************************************************
+#发送邮件
+#sqmuuyfgcydwdhej
+def send_email_action(request):
+    mail.send_mail(subject="测试邮件",message="哈喽沃德",from_email="1932966162@qq.com",recipient_list=["1932966162@qq.com"])
+    return(HttpResponse(request,"发送成功"))
 
 
+#**********************************************************************
+#异常测试
+def test(request):
+    pass
+    #放异常

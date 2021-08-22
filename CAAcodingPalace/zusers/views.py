@@ -1,4 +1,4 @@
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.shortcuts import render
 from zusers.models import User
 from zprojects.models import Project
@@ -6,8 +6,13 @@ import hashlib
 import time,os
 from PIL import Image
 from django.core.paginator import Paginator
-
+#发送邮件
+from django.core import mail
+import random
 # Create your views here.
+#**********************************************************************
+#验证码
+ecode=""
 #**********************************************************************
 #◉在函数被执行前会先执行装饰器
 def check_login(fn):
@@ -22,12 +27,28 @@ def check_login(fn):
 def register_page(request):
     return(render(request,"users/register.html"))
 #**********************************************************************
+#发送验证码
+def send_ecode_action(request,email):
+    global ecode
+    ecode=""
+    for i in range(8):
+        currentNumber=int(random.randrange(0,9))
+        ecode+=str(currentNumber)
+    #{
+    print("--register:ecode:"+ecode)
+    #}
+    tempstr="验证码:\n"+ecode
+    mail.send_mail(subject="验证码",message=tempstr,from_email="1932966162@qq.com",recipient_list=[email])
+    return(JsonResponse({"state":0}))
+#**********************************************************************
 #进行注册
 def register_action(request):
+    global ecode
     username=request.POST["username"]
     password_1=request.POST["password_1"]
     password_2=request.POST["password_2"]
-
+    currentEcode=request.POST["ecode"]
+    email=request.POST["email"]
     if password_1!=password_2:
         uploadContext={"info":"两次密码不一致"}
         return(render(request,"users/registerError.html",context=uploadContext))
@@ -43,9 +64,14 @@ def register_action(request):
         uploadContext={"info":"该用户名(%s)已存在"%(username)}
         return(render(request,"users/registerError.html",context=uploadContext))
 
+    #实现注册后免登录【默认14天】
+    if currentEcode!=ecode:
+        uploadContext={"info":"验证码错误"}
+        return(render(request,"users/registerError.html",context=uploadContext))
+
     #插入数据
     try:
-        new_user=User.objects.create(username=username,password=password_m)
+        new_user=User.objects.create(username=username,password=password_m,email=email)
         #{
         print("--create user:username=%s;userpassword=%s"%(username,password_1))
         #}
@@ -56,11 +82,11 @@ def register_action(request):
         uploadContext={"info":"该用户名已存在"}
         return(render(request,"users/registerError.html",context=uploadContext))
 
-    #实现注册后免登录【默认14天】
+
     request.session["username"]=username
     request.session["userid"]=new_user.id
 
-    return(HttpResponse("cg"))
+    return(HttpResponseRedirect("/projects/indexPage/1"))
 #**********************************************************************
 def login_page(request):
     if request.session.get("username") and request.session.get("userid"):
