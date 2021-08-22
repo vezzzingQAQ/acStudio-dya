@@ -153,6 +153,35 @@ body{
     border-bottom: rgb(107, 43, 226) 5px solid;
     color: rgb(107, 43, 226);
 }
+@media only screen and (max-width: 1000px) {
+    /*移动端适配*/
+    .nav>li{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 25vw;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        float: left;
+        color: rgb(0, 0, 0);
+        transition: 0.2s ease-in-out;
+    }    
+    .nav>li:first-child{
+        margin-left: 0;
+    }
+    .nav .sub{
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        left: 10vw;
+        top: 50px;
+        width: 80vw;
+        border-radius: 0 0 10px 10px;
+        display: none;
+    }
+    
+}
 /**********************************************************************************************/
 .content_section{
     z-index: 9999;
@@ -174,7 +203,7 @@ body{
 .content_section .innerContent_div .innerComponent_div{
     display: flexbox;
     position: relative;
-    height: 350px;
+    height: 330px;
     background-color: rgba(250, 250, 250, 0.596);
     box-shadow: 0 0 1px rgba(0,0,0,0.1);
     border-radius: 0 0 8px 8px;
@@ -198,15 +227,18 @@ body{
     }
 }
 @media only screen and (max-width: 1000px) {
+    /*移动端适配*/
+    .content_section .innerContent_div{
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
     .content_section .innerContent_div .innerComponent_div{
         margin: 1%;
         width: 48%;
-    }
-}
-@media only screen and (max-width: 800px) {
-    .content_section .innerContent_div .innerComponent_div{
-        margin: 5%;
-        width: 100%;
+        border-radius: 8px;
+        margin-top: 10px;
+        height: 280px;
     }
 }
 .content_section .innerContent_div .innerComponent_div:hover .textArea_div{
@@ -256,7 +288,7 @@ body{
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerTitle_h2{
     margin: 0;
     padding: 0;
-    font-size: 1.5em;
+    font-size:20px;
     color: rgba(0,0,0);
     transition: 0.25s ease-in-out;
 }
@@ -264,14 +296,14 @@ body{
     margin: 0;
     padding: 0;
     padding-top: 5px;
-    font-size: 0.5em;
+    font-size: 6px;
     color: rgb(29, 29, 29);
 }
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerType_p{
     margin: 0;
     padding: 0;
     padding-top: 15px;
-    font-size: 0.5em;
+    font-size: 6px;
     color: rgb(97, 97, 97);
 }
 .content_section .innerContent_div .innerComponent_div .textArea_div .imgContainer{
@@ -280,7 +312,15 @@ body{
     color: rgb(43, 226, 52);
     position: relative;
 }
-
+.content_section .innerContent_div .innerComponent_div .textArea_div .createdTime_p{
+    position: absolute;
+    top: 5px;
+    right: 3px;
+    padding-right: 16px;
+    text-align: right;
+    font-size: 5px;
+    color: gray;
+}
 .content_section .innerContent_div .innerComponent_div .textArea_div .contentInnerImg_img{
     display: inline;
     width: 30px;

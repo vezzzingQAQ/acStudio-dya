@@ -29,6 +29,7 @@ def index_page(request,currentPage=1):
             mypara="?keyWord=%s"%(kw)
         else:
             ulist=Project.objects.filter()
+            ulist=ulist.order_by("-created_time")
         p=Paginator(ulist,28)#4条数据一页
         #判断页码值是否有效
         if currentPage<1:

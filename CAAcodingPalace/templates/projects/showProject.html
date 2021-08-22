@@ -51,12 +51,19 @@
     .projectinfo_section .type{
         font-size: 13px;
         color: gray;
+        padding-left: 15px;
+    }
+    .projectinfo_section .info{
+        font-size: 12px;
+        margin-bottom: 10px;
+        padding-bottom: 18px;
+        padding-left: 15px;
     }
     .projectinfo_section .img_holder{
         overflow: hidden;
         position: absolute;
         top: 10%;
-        right: 30px;
+        right: 0;
         height: 80%;
         border-radius: 10px;
         width: 300px;
@@ -79,6 +86,12 @@
         text-decoration: none;
         color: white;
         border-radius:20px;
+    }
+
+    .code_section code{
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 8px;
+        padding: 10px;
     }
 
     .comment_section{
@@ -145,23 +158,68 @@
         padding: 5px;
         border-radius: 4px;
     }
+    /*电脑端适配*/
+    .phone_ing_section{
+        display: none;
+    }
+    @media only screen and (max-width: 1000px) {
+    /*移动端适配*/
+        .inner{
+            width: 90%;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .phone_ing_section{
+            display: block;
+            background-color: rgb(238, 238, 238);
+        }
+        .cpt{
+            display: none;
+        }
+        .phone_ing_section .img_holder{
+            overflow: hidden;
+            
+            border-radius: 10px;
+            background-color: rgb(215, 136, 218);
+            width: 100%;
+            height: 300px;
+        }
+        .phone_ing_section .project_img{
+            top: 0;
+            right: 0;
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
 </style>
 {% endblock %}
 {% block content %}
 <section class="projectinfo_section normalSection">
     <div class="inner">
         <p class="title">{{project.title}}</p>
-        <p class="author"><img src="/static/users/headPictures/{{project.author_head_portrait}}" alt="出错啦"><span>by:{{project.author_name}}</span></p>
-        <p>创建时间:<span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
+        <p class="author"><img src="/static/users/headPictures/{{project.author_head_portrait}}" alt="出错啦"><span><a href="/users/showUserInfoPage/{{project.user_id}}/1">by:{{project.author_name}}</a></span></p>
+        <p>创建时间: <span>{{project.created_time|date:'Y-m-d H:i:s'}}</span></p>
         <p class="type">{{project.type}}</p>
+        <p class="info">{{project.introduction}}</p>
+
         <a class="download" href="/static/projects/repository/{{project.repository}}" target="_blank">下载源文件</a>
-        <div class="img_holder">
+        <div class="img_holder cpt">
+            <img class="project_img" src="/static/projects/coverPictures/{{project.cover_portrait}}">
+        </div>
+    </div>
+</section>
+<section class="phone_ing_section normalSection">
+    <div class="inner">
+        <div class="img_holder mbi">
             <img class="project_img" src="/static/projects/coverPictures/{{project.cover_portrait}}">
         </div>
     </div>
 </section>
 <section class="code_section normalSection">
     <div class="inner">
+        <p>掌握核心科技(ﾉ*･ω･)ﾉ↓</p>
         <pre><code>{{project.code}}</code></pre>
     </div>
 </section>
@@ -169,9 +227,7 @@
     <div class="inner">
         <form action="{% url 'addcommentaction' %}" method="POST">
             {% csrf_token %}
-            <textarea name="content" maxlength="255" required="required">
-
-            </textarea>
+            <textarea name="content"></textarea>
             <input type="hidden" name="projectId" value="{{project.id}}">
             <input class="submit" type="submit">
         </form>

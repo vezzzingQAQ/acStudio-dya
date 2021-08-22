@@ -200,6 +200,7 @@ def show_user_info_page(request,userId=1,currentPage=1):
     if currentUser.id==request.session["userid"]:
         isAdmin=True
     curentProjects=Project.objects.filter(user_id=userId)
+    curentProjects=curentProjects.order_by("-created_time")
     p=Paginator(curentProjects,4)#4条数据一页
     #判断页码值是否有效
     if currentPage<1:

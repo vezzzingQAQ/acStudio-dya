@@ -51,9 +51,13 @@
             </a>
             <div class="textArea_div">
                 <h2 class="contentInnerTitle_h2">{{project.title}}</h2>
+                <p class="createdTime_p">{{project.created_time|date:'Y-m-d'}}</p>
                 <p class="contentInnerText_p">{{project.introduction}}</p>
                 <p class="contentInnerType_p">{{project.type}}</p>
-                <p class="contentInnerType_p imgContainer"><img class="contentInnerImg_img" src="/static/users/headPicturesSmall/{{project.author_head_portrait}}"><a href="/users/showUserInfoPage/{{project.user_id}}/1">{{project.author_name}}</a></p>
+                <p class="contentInnerType_p imgContainer">
+                    <img class="contentInnerImg_img" src="/static/users/headPicturesSmall/{{project.author_head_portrait}}">
+                    <a href="/users/showUserInfoPage/{{project.user_id}}/1">{{project.author_name}}</a>
+                </p>
             </div>
         </div>
         {% endfor %}        
